@@ -6,7 +6,7 @@ import seaborn as sns
 df = pd.read_csv('Project/data/BankChurners.csv')
 
 
-#deletin clientum id, naive bayes and avg utilization ratio columns as they are not relevant and/or raw data
+#deleting clientum id, naive bayes and avg utilization ratio columns as they are not relevant and/or raw data
 df = df.iloc[:, 1:-2]
 
 # map the target variable to binary values 
@@ -15,7 +15,6 @@ df['Attrition_Flag'] = df['Attrition_Flag'].map({'Existing Customer': 0, 'Attrit
 # general look at the data
 print(df.head())
 print(df.info())
-
 sns.set_style("whitegrid")
 
 # How many customers are existing vs attiring?
@@ -50,3 +49,14 @@ corr_matrix = numeric_df.corr()
 sns.heatmap(corr_matrix, annot=True, fmt=".2f", cmap='coolwarm', linewidths=0.5)
 plt.title('Correlation Matrix of Numerical Features')
 plt.show()
+
+# Total_Trans_Ct (-0.37): As the number of transactions goes down, the probability of the customer leaving (Attrition) goes up. Basically, if they stop using the card, they are going to quit.  
+# Total_Ct_Chng_Q4_Q1 (-0.29): A drop in transaction count between the first and fourth quarters is a big red flag.  
+# Total_Revolving_Bal (-0.26): Customers with lower revolving balances are more likely to leave. This often suggests they aren't deeply "hooked" into the bank's credit ecosystem.  
+# Contacts_Count_12_mon (0.20): Notice this is positive. This means the more times a customer contacts the bank, the more likely they are to leave. They are probably calling to complain!
+
+
+#because avg_open_to but and credit_limit have a correlation of 1 this means they are basically the same so we need to remove one of them to avoid multicollinearity.
+df.drop('Avg_Open_To_Buy', axis=1, inplace=True)
+#because of the strong 0.79 correlation between customer age and years on book, we do the same
+df.drop('months_on_book',axis=1, inplace=True)
