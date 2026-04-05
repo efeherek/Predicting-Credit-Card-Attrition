@@ -49,20 +49,20 @@ if st.button("Predict Churn Risk", type="primary", use_container_width=True):
         'Dependent_count': 2,                       # Baseline
         'Education_Level': 'Graduate',              # Baseline
         'Marital_Status': 'Married',                # Baseline
-        'Income_Category': '$40K - $60K',           # Baseline
+        'Income_Category': 'Less than $40K',           # Baseline
         'Card_Category': 'Blue',                    # Baseline
         'Months_on_book': 36,                       # Baseline
         'Total_Relationship_Count': relationship_count, # From UI
         'Months_Inactive_12_mon': months_inactive,      # From UI
-        'Contacts_Count_12_mon': 3,                 # Baseline
-        'Credit_Limit': 8600.0,                     # Baseline
+        'Contacts_Count_12_mon': 2,                 # Baseline
+        'Credit_Limit': 4549.0,                     # Baseline
         'Total_Revolving_Bal': revolving_bal,           # From UI
         'Avg_Open_To_Buy': 7400.0,                  # Baseline
-        'Total_Amt_Chng_Q4_Q1': 0.76,               # Baseline
+        'Total_Amt_Chng_Q4_Q1': 0.736,               # Baseline
         'Total_Trans_Amt': total_trans_amt,             # From UI
         'Total_Trans_Ct': total_trans_ct,               # From UI
         'Total_Ct_Chng_Q4_Q1': total_ct_chng,           # From UI
-        'Avg_Utilization_Ratio': 0.27               # Baseline
+        'Avg_Utilization_Ratio': 0.176               # Baseline
     }
 
     input_data = pd.DataFrame([full_input_dict])
@@ -72,7 +72,7 @@ if st.button("Predict Churn Risk", type="primary", use_container_width=True):
     prediction = model.predict(input_data)[0]
     probability = model.predict_proba(input_data)[0][1] # Probability of Class 1 (Attrited)
 
-    # Display results nicely
+    # Display results 
     if prediction == 1:
         st.error(f"###  High Risk of Churn")
         st.write(f"The model predicts an **{probability:.1%}** probability that this customer will close their account.")
